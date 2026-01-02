@@ -61,7 +61,7 @@
                 </button>
 
                 <p class="text-center text-sm text-gray-500 font-medium mt-4">
-                    Belum punya akun? <a href="#" class="text-blue-600 font-black hover:underline">Hubungi Admin</a>
+                    Belum punya akun? <a href="#" class="text-blue-600 font-black hover:underline">Daftar Sekarang</a>
                 </p>
             </form>
         </div>
@@ -81,7 +81,7 @@
             bubble.style.height = size;
             bubble.style.left = Math.random() * 100 + '%';
             bubble.style.bottom = '-50px';
-            bubble.style.backgroundColor = 'rgba(59, 130, 246, 0.15)'; 
+            bubble.style.backgroundColor = 'rgba(59, 130, 246, 0.15)';
             bubble.style.animationDuration = Math.random() * 4 + 3 + 's';
 
             bubbleArea.appendChild(bubble);

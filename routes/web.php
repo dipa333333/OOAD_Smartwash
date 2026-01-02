@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-// Import Semua Controller
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PemesananController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\RegisterController;
 // --- HALAMAN UTAMA (LANDING PAGE) ---
 // Sekarang buka web langsung ke Landing Page, bukan redirect ke Login
 Route::get('/', [LandingController::class, 'index'])->name('home');
+Route::get('/cek-laundry', [LandingController::class, 'cekPesanan'])->name('cek.pesanan');
 
 // --- ROUTE GUEST (Hanya bisa diakses jika BELUM login) ---
 Route::middleware('guest')->group(function () {
@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/pesanan/{id}', [AdminController::class, 'show'])->name('pesanan.show');
         Route::patch('/pesanan/{id}/update', [AdminController::class, 'updateStatus'])->name('pesanan.update');
         Route::get('/pesanan/{id}/bayar', [AdminController::class, 'formBayar'])->name('pesanan.bayar');
-        Route::post('/pesanan/{id}/bayar', [AdminController::class, 'processBayar'])->name('pesanan.bayar.process');
+        Route::post('/pesanan/{id}/bayar', [AdminController::class, 'processBayar'])->name('pesanan.process');
         Route::get('/pesanan/{id}/struk', [AdminController::class, 'cetakStruk'])->name('pesanan.struk');
         Route::get('/pesanan/{id}/label', [AdminController::class, 'cetakLabel'])->name('pesanan.label');
         Route::get('/laporan', [AdminController::class, 'laporan'])->name('laporan');

@@ -3,110 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Struk #{{ $pesanan->idPesanan }}</title>
+    <title>Struk Pembayaran #{{ $pesanan->idPesanan }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @page { size: 80mm 200mm; margin: 0; }
-        body {
-            font-family: 'Courier New', Courier, monospace;
-            width: 70mm; 
-            margin: 0 auto;
-            padding: 10px;
-            font-size: 12px;
-            color: #000;
-        }
-        .text-center { text-align: center; }
-        .text-right { text-align: right; }
-        .bold { font-weight: bold; }
-        .divider { border-top: 1px dashed #000; margin: 5px 0; }
-        .header { margin-bottom: 10px; }
-        .header h2 { margin: 0; font-size: 18px; }
-        .info { font-size: 10px; margin-bottom: 10px; }
-        .table { width: 100%; border-collapse: collapse; }
-        .footer { margin-top: 15px; font-size: 10px; }
-
+        /* Style ala Struk Thermal */
+        body { font-family: 'Courier New', Courier, monospace; background: #eee; }
+        .struk { width: 300px; background: white; margin: 50px auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .dashed { border-top: 1px dashed #000; margin: 10px 0; }
         @media print {
+            body { background: white; }
+            .struk { width: 100%; box-shadow: none; margin: 0; padding: 0; }
             .no-print { display: none; }
         }
     </style>
 </head>
-<body onload="window.print()">
+<body>
 
-    <div class="header text-center">
-        <h2>SMARTWASH</h2>
-        <div style="font-size: 9px;">Jl. Laundry Modern No. 123, Jakarta</div>
-        <div style="font-size: 9px;">Telp: 0812-3456-7890</div>
+    <div class="struk">
+        <div class="text-center mb-4">
+            <h1 class="text-xl font-bold uppercase">SmartWash</h1>
+            <p class="text-xs">Jln. Kebersihan No. 1, Jakarta</p>
+            <p class="text-xs">WA: 0812-3456-7890</p>
+        </div>
+
+        <div class="dashed"></div>
+
+        <div class="text-xs mb-2">
+            <div class="flex justify-between">
+                <span>No. Nota</span>
+                <span>#{{ $pesanan->idPesanan }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Tanggal</span>
+                <span>{{ date('d/m/Y H:i') }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Pelanggan</span>
+                <span class="font-bold">{{ substr($pesanan->user->nama, 0, 15) }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>Kasir</span>
+                <span>{{ Auth::user()->nama }}</span>
+            </div>
+        </div>
+
+        <div class="dashed"></div>
+
+        <div class="text-xs mb-2 space-y-1">
+            @foreach($pesanan->details as $detail)
+            <div>
+                <div class="font-bold">{{ $detail->layanan->namaLayanan }}</div>
+                <div class="flex justify-between">
+                    <span>{{ $detail->jumlah }} x {{ number_format($detail->hargaSatuan, 0, ',', '.') }}</span>
+                    <span>{{ number_format($detail->subtotal, 0, ',', '.') }}</span>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="dashed"></div>
+
+        @php
+            $total = $pesanan->transaksi->totalBayar;
+            // Ambil uang bayar dari session (jika baru bayar) atau anggap uang pas (jika cetak ulang)
+            $bayar = session('uang_bayar') ? session('uang_bayar') : $total;
+            $kembali = $bayar - $total;
+        @endphp
+
+        <div class="text-xs font-bold space-y-1">
+            <div class="flex justify-between text-sm">
+                <span>TOTAL</span>
+                <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>TUNAI/BAYAR</span>
+                <span>Rp {{ number_format($bayar, 0, ',', '.') }}</span>
+            </div>
+            <div class="flex justify-between">
+                <span>KEMBALI</span>
+                <span>Rp {{ number_format($kembali, 0, ',', '.') }}</span>
+            </div>
+            <div class="flex justify-between mt-2 italic font-normal text-center">
+                <span class="w-full text-[10px]">{{ $pesanan->transaksi->metodePembayaran }}</span>
+            </div>
+        </div>
+
+        <div class="dashed"></div>
+
+        <div class="text-center text-[10px] mt-4">
+            <p>Terima Kasih atas Kepercayaan Anda</p>
+            <p>Barang yang tidak diambil > 1 bulan</p>
+            <p>bukan tanggung jawab kami.</p>
+        </div>
+
+        <div class="no-print mt-6 flex flex-col gap-2">
+            <button onclick="window.print()" class="w-full bg-blue-600 text-white py-2 rounded-lg font-bold hover:bg-blue-700 text-xs">
+                🖨️ CETAK STRUK
+            </button>
+            <button onclick="handleClose()" class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg font-bold hover:bg-gray-300 text-xs">
+                ❌ TUTUP
+            </button>
+        </div>
     </div>
 
-    <div class="divider"></div>
+    <script>
+        // Otomatis print pas dibuka (opsional)
+        // window.onload = function() { window.print(); }
 
-    <div class="info">
-        <table width="100%">
-            <tr>
-                <td>No. Nota</td>
-                <td class="text-right">#{{ $pesanan->idPesanan }}</td>
-            </tr>
-            <tr>
-                <td>Tanggal</td>
-                <td class="text-right">{{ $pesanan->created_at->format('d/m/y H:i') }}</td>
-            </tr>
-            <tr>
-                <td>Pelanggan</td>
-                <td class="text-right">{{ strtoupper($pesanan->user->nama) }}</td>
-            </tr>
-        </table>
-    </div>
-
-    <div class="divider"></div>
-
-    <table class="table">
-        @foreach($pesanan->details as $detail)
-        <tr>
-            <td colspan="2">{{ $detail->layanan->namaLayanan }}</td>
-        </tr>
-        <tr>
-            <td style="padding-bottom: 5px;">{{ $detail->jumlah }} x {{ number_format($detail->layanan->harga, 0, ',', '.') }}</td>
-            <td class="text-right" style="vertical-align: bottom;">{{ number_format($detail->jumlah * $detail->layanan->harga, 0, ',', '.') }}</td>
-        </tr>
-        @endforeach
-    </table>
-
-    <div class="divider"></div>
-
-    <table width="100%" class="bold">
-        <tr>
-            <td>TOTAL</td>
-            <td class="text-right">Rp {{ number_format($pesanan->totalHarga, 0, ',', '.') }}</td>
-        </tr>
-        @if($pesanan->transaksi)
-        <tr>
-            <td>BAYAR ({{ $pesanan->transaksi->metodePembayaran }})</td>
-            <td class="text-right">Rp {{ number_format($pesanan->transaksi->totalBayar, 0, ',', '.') }}</td>
-        </tr>
-        <tr>
-            <td>KEMBALI</td>
-            <td class="text-right">Rp {{ number_format($pesanan->transaksi->totalBayar - $pesanan->totalHarga, 0, ',', '.') }}</td>
-        </tr>
-        @endif
-    </table>
-
-    <div class="divider"></div>
-
-    <div class="text-center bold" style="margin: 10px 0; border: 1px solid #000; padding: 3px;">
-        @if($pesanan->transaksi)
-            *** LUNAS ***
-        @else
-            * BELUM BAYAR *
-        @endif
-    </div>
-
-    <div class="footer text-center">
-        <p>Terima kasih telah mempercayakan pakaian Anda kepada kami!</p>
-        <p>Status cucian dapat dipantau di:<br>smartwash.test</p>
-    </div>
-
-    <div class="no-print" style="margin-top: 20px; text-align: center;">
-        <button onclick="window.close()" style="padding: 10px 20px; cursor: pointer;">Tutup Halaman</button>
-    </div>
-
+        function handleClose() {
+            // Coba tutup tab dulu
+            window.close();
+            // Kalau gak bisa (karena bukan popup), arahkan ke dashboard
+            window.location.href = "{{ route('admin.dashboard') }}";
+        }
+    </script>
 </body>
 </html>

@@ -13,24 +13,44 @@
                     <p class="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0 leading-relaxed">
                         Solusi laundry cerdas dengan sistem tracking real-time. Kami menjamin pakaian Anda kembali wangi, rapi, dan tepat waktu.
                     </p>
-                    <div class="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start gap-4">
+
+                    <div class="mt-8 sm:max-w-lg sm:mx-auto lg:mx-0">
+                        <form action="{{ route('cek.pesanan') }}" method="GET" class="relative group">
+                            <div class="absolute -inset-1 bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-200"></div>
+                            <div class="relative flex items-center bg-white rounded-full border border-gray-200 shadow-lg shadow-blue-900/5 p-1.5 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+                                <div class="pl-4 text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </div>
+                                <input type="number" name="id" placeholder="Nomor Nota (Cth: 10)" required
+                                    class="w-full px-4 py-3 bg-transparent border-none text-gray-800 font-bold placeholder:text-gray-400 focus:ring-0 outline-none text-sm sm:text-base appearance-none">
+                                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-black py-3 px-6 rounded-full transition-all transform hover:scale-105 shadow-md text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2">
+                                    <span>Lacak</span>
+                                    <span class="hidden sm:inline">Sekarang</span>
+                                </button>
+                            </div>
+                        </form>
+                        <p class="mt-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest pl-4">
+                            *Cek status tanpa login
+                        </p>
+                    </div>
+                    <div class="mt-8 sm:mt-10 sm:flex sm:justify-center lg:justify-start gap-4">
                         @auth
-                            <a href="{{ route('pelanggan.dashboard') }}" class="flex items-center justify-center px-8 py-4 rounded-2xl text-white bg-blue-600 hover:bg-blue-700 font-bold transition transform hover:scale-105 shadow-lg shadow-blue-200 uppercase tracking-wider text-sm">
-                                🚀 Ke Dashboard
+                            <a href="{{ route('pelanggan.dashboard') }}" class="flex items-center justify-center px-8 py-3 rounded-2xl text-blue-600 bg-blue-50 hover:bg-blue-100 font-bold transition border border-blue-200 uppercase tracking-wider text-sm">
+                                 Masuk Dashboard
                             </a>
                         @else
-                            <a href="{{ route('login') }}" class="flex items-center justify-center px-8 py-4 rounded-2xl text-white bg-blue-600 hover:bg-blue-700 font-bold transition transform hover:scale-105 shadow-lg shadow-blue-200 uppercase tracking-wider text-sm">
-                                ✨ Pesan Sekarang
+                            <a href="{{ route('login') }}" class="flex items-center justify-center px-8 py-3 rounded-2xl text-blue-600 bg-blue-50 hover:bg-blue-100 font-bold transition border border-blue-200 uppercase tracking-wider text-sm">
+                                 Login Member
                             </a>
                         @endauth
-                        <a href="#kalkulator" class="flex items-center justify-center px-8 py-4 rounded-2xl text-blue-600 bg-blue-50 hover:bg-blue-100 font-bold transition border border-blue-200 uppercase tracking-wider text-sm">
-                            Cek Harga
-                        </a>
                     </div>
                 </div>
             </main>
         </div>
     </div>
+
     <div class="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2 bg-gradient-to-br from-blue-700 to-indigo-950 flex items-center justify-center overflow-hidden p-10">
 
         <div id="bubble-area" class="absolute inset-0 z-0 opacity-30"></div>
@@ -100,6 +120,83 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-24 bg-white overflow-hidden" id="tentang-kami">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex flex-col lg:flex-row items-center gap-16 md:gap-24">
+
+            <div class="relative w-full lg:w-1/2">
+                <div class="absolute -top-10 -left-10 w-40 h-40 bg-blue-50 rounded-full blur-3xl opacity-70"></div>
+                <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-indigo-50 rounded-full blur-3xl opacity-70"></div>
+
+                <div class="relative group">
+                    <div class="absolute -inset-4 bg-gradient-to-tr from-blue-600 to-indigo-600 rounded-[3.5rem] opacity-10 group-hover:opacity-20 transition duration-500"></div>
+
+                    <img src="https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=1000"
+                         alt="SmartWash Workshop"
+                         class="relative w-full h-[500px] object-cover rounded-[3rem] shadow-2xl border-4 border-white transform group-hover:scale-[1.02] transition duration-500">
+
+                    <div class="absolute -bottom-8 -left-8 bg-white p-6 rounded-[2rem] shadow-2xl border border-gray-50 flex items-center gap-5 animate-bounce-slow">
+                        <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-blue-200">
+                            🧼
+                        </div>
+                        <div>
+                            <p class="text-3xl font-black text-gray-800 leading-none">10th</p>
+                            <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mt-1 text-left">Tahun <br> Pengalaman</p>
+                        </div>
+                    </div>
+
+                    <div class="absolute top-10 -right-6 bg-emerald-500 p-4 rounded-2xl shadow-xl border-4 border-white text-white rotate-6 hover:rotate-0 transition duration-300">
+                        <p class="text-[10px] font-black uppercase tracking-tighter">1 Mesin 1 Pelanggan</p>
+                        <p class="text-[9px] font-bold opacity-80">Higienitas Terjamin ✨</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full lg:w-1/2 text-left">
+                <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-5 py-2 rounded-full mb-8">
+                    <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                    <span class="text-[15px] font-black uppercase tracking-[0.2em]">Siapa Kami?</span>
+                </div>
+
+                <h2 class="text-4xl md:text-5xl font-black text-gray-800 leading-[1.1] mb-8 tracking-tighter">
+                    Kami Menjaga <span class="text-blue-600">Pakaian Anda</span> <br> Seperti Milik Sendiri.
+                </h2>
+
+                <p class="text-gray-500 text-lg leading-relaxed mb-10 italic">
+                    SmartWash hadir untuk mendefinisikan ulang standar kebersihan. Kami bukan hanya mencuci pakaian, kami memberikan Anda **ketenangan pikiran** dan **waktu luang** yang berharga.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
+                    <div class="group">
+                        <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                            🌊
+                        </div>
+                        <h4 class="font-black text-gray-800 mb-2 uppercase text-xs tracking-widest">Air Terfilter</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Sistem filtrasi canggih memastikan air bebas kaporit dan zat yang merusak serat kain.</p>
+                    </div>
+                    <div class="group">
+                        <div class="w-10 h-10 bg-gray-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                            🌿
+                        </div>
+                        <h4 class="font-black text-gray-800 mb-2 uppercase text-xs tracking-widest">Deterjen Organik</h4>
+                        <p class="text-sm text-gray-400 leading-relaxed">Ramah lingkungan dan hipoalergenik, aman untuk kulit sensitif dan pakaian bayi.</p>
+                    </div>
+                </div>
+
+                <div class="pt-8 border-t border-gray-100 flex items-center gap-6">
+                    <div class="flex -space-x-3">
+                        <img src="https://i.pravatar.cc/100?u=1" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=2" class="w-10 h-10 rounded-full border-2 border-white">
+                        <img src="https://i.pravatar.cc/100?u=3" class="w-10 h-10 rounded-full border-2 border-white">
+                    </div>
+                    <p class="text-xs text-gray-400 font-medium">Bergabung dengan <span class="text-gray-800 font-bold">1,000+ Pelanggan Setia</span> di area Denpasar.</p>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -278,14 +375,47 @@
     </div>
 </div>
 
-<div class="relative bg-blue-600 rounded-[4rem] p-20 text-center text-white overflow-hidden mb-10 mx-4 shadow-2xl group">
+<div class="relative bg-blue-600 rounded-[4rem] p-12 md:p-20 overflow-hidden mb-10 mx-4 shadow-2xl group">
     <div id="footer-bubble-area" class="absolute inset-0 z-0 pointer-events-none opacity-50"></div>
-    <div class="relative z-10">
-        <h2 class="text-5xl md:text-6xl font-black mb-8 italic tracking-tighter uppercase">Siap Mencuci <br><span class="text-cyan-300">Tanpa Ribet?</span></h2>
-        <p class="text-blue-100 mb-12 max-w-xl mx-auto text-lg opacity-90">Gabung dengan ribuan pelanggan SmartWash dan nikmati waktu luangmu hari ini.</p>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <a href="{{ route('login') }}" class="bg-white text-blue-600 font-black px-12 py-5 rounded-2xl hover:bg-gray-100 transition shadow-2xl transform hover:-translate-y-1 uppercase tracking-widest text-sm">Mulai Sekarang</a>
-            <a href="https://wa.me/628" class="bg-blue-700 text-white font-black px-12 py-5 rounded-2xl border border-blue-500 hover:bg-blue-800 transition uppercase tracking-widest text-sm">Hubungi Admin</a>
+
+    <div class="relative z-10 max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+
+            <div class="text-center lg:text-left">
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-6 italic tracking-tighter uppercase leading-tight">
+                    Siap Mencuci <br><span class="text-cyan-300">Tanpa Ribet?</span>
+                </h2>
+                <p class="text-blue-100 mb-10 text-lg opacity-90 leading-relaxed">
+                    Gabung dengan ribuan pelanggan SmartWash. Lokasi strategis, parkir luas, dan layanan kilat menunggu Anda.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <a href="{{ route('login') }}" class="w-full sm:w-auto bg-white text-blue-600 font-black px-10 py-4 rounded-2xl hover:bg-gray-100 transition shadow-xl transform hover:-translate-y-1 uppercase tracking-widest text-xs sm:text-sm text-center">
+                        Mulai Sekarang
+                    </a>
+                    <a href="https://wa.me/6285739519144" class="w-full sm:w-auto bg-blue-700 text-white font-black px-10 py-4 rounded-2xl border border-blue-500 hover:bg-blue-800 transition uppercase tracking-widest text-xs sm:text-sm text-center">
+                        Hubungi Admin
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative w-full h-80 lg:h-96 bg-blue-800 rounded-[3rem] overflow-hidden border-8 border-blue-500/30 shadow-inner group-hover:border-blue-400/50 transition-colors duration-500">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.1123456789!2d115.123456!3d-8.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSmartWash!5e0!3m2!1sid!2sid!4v1234567890"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="absolute inset-0 filter grayscale hover:grayscale-0 transition duration-700">
+                </iframe>
+
+                <div class="absolute bottom-6 right-6 bg-white text-blue-800 px-4 py-2 rounded-xl text-xs font-bold shadow-lg pointer-events-none">
+                    📍 Lokasi Laundry
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
@@ -402,24 +532,35 @@
         hitungUlang();
 
         // --- 2. BUBBLES ---
-        function createBubble(targetAreaId, bubbleColor = 'rgba(255, 255, 255, 0.2)') {
-            const area = document.getElementById(targetAreaId);
-            if (!area) return;
-            const bubble = document.createElement('div');
-            bubble.classList.add('bubble');
-            bubble.style.backgroundColor = bubbleColor;
-            const size = Math.random() * 20 + 10 + 'px';
-            bubble.style.width = size;
-            bubble.style.height = size;
-            bubble.style.left = Math.random() * 100 + '%';
-            bubble.style.bottom = '-20px';
-            bubble.style.animationDuration = Math.random() * 3 + 2 + 's';
-            area.appendChild(bubble);
-            setTimeout(() => { bubble.remove(); }, 4000);
-        }
+        function createBubble(targetAreaId, bubbleStyle = 'rgba(255, 255, 255, 0.2)') {
+        const area = document.getElementById(targetAreaId);
+        if (!area) return;
 
-        setInterval(() => createBubble('bubble-area', 'rgba(59, 130, 246, 0.3)'), 500);
-        setInterval(() => createBubble('footer-bubble-area', 'rgba(255, 255, 255, 0.2)'), 800);
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        bubble.style.background = bubbleStyle;
+        bubble.style.border = '1px solid rgba(255, 255, 255, 0.4)';
+        bubble.style.boxShadow = '0 0 5px rgba(255, 255, 255, 0.2)';
+
+        const size = Math.random() * 20 + 10 + 'px';
+        bubble.style.width = size;
+        bubble.style.height = size;
+
+        bubble.style.position = 'absolute';
+        bubble.style.borderRadius = '50%';
+
+        bubble.style.left = Math.random() * 100 + '%';
+        bubble.style.bottom = '-20px';
+        bubble.style.animationDuration = Math.random() * 3 + 2 + 's';
+
+        area.appendChild(bubble);
+        setTimeout(() => { bubble.remove(); }, 4000);
+    }
+    setInterval(() => createBubble('bubble-area', 'rgba(59, 130, 246, 0.3)'), 500);
+    setInterval(() => createBubble(
+        'footer-bubble-area',
+        'radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1))'
+    ), 800);
 
 
         const counters = document.querySelectorAll('.counter');

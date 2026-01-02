@@ -17,17 +17,12 @@ class AdminController extends Controller
     public function index()
     {
         $this->checkAdmin();
-
         $stats = [
             'masuk' => Pesanan::where('statusPesanan', 'Menunggu Validasi')->count(),
             'proses' => Pesanan::whereIn('statusPesanan', ['Antre', 'Cuci', 'Setrika'])->count(),
             'siap_ambil' => Pesanan::where('statusPesanan', 'Selesai')->doesntHave('transaksi')->count(),
         ];
-
-        $pesanans = Pesanan::with(['user', 'details.layanan', 'transaksi'])
-                            ->orderBy('created_at', 'desc')
-                            ->get();
-
+        $pesanans = Pesanan::with(['user', 'details.layanan', 'transaksi'])->orderBy('created_at', 'desc')->paginate(5);
         return view('admin.dashboard', compact('stats', 'pesanans'));
     }
 
@@ -38,29 +33,22 @@ class AdminController extends Controller
         return view('admin.detail', compact('pesanan'));
     }
 
-    // --- UPDATE STATUS LOGIC (DIPERBARUI) ---
     public function updateStatus(Request $request, $id)
     {
         $this->checkAdmin();
         $pesanan = Pesanan::findOrFail($id);
+        $request->validate(['status' => 'required', 'estimasi' => 'nullable|date|after_or_equal:today']);
 
-        $request->validate([
-            'status' => 'required',
-            // Jika status yang dikirim adalah Antre (Validasi), tanggal estimasi wajib diisi
-            'estimasi' => 'nullable|date|after_or_equal:today'
-        ]);
-
-        // Jika status berubah jadi Antre, simpan estimasinya
         if ($request->status == 'Antre' && $request->has('estimasi')) {
             $pesanan->estimasiSelesai = $request->estimasi;
         }
 
         $pesanan->statusPesanan = $request->status;
         $pesanan->save();
-
-        return back()->with('success', "Status pesanan #{$id} diperbarui menjadi {$request->status}");
+        return back()->with('success', "Status pesanan #{$id} diperbarui!");
     }
 
+    // --- FUNGSI BAYAR (YANG TADI TERHAPUS) ---
     public function formBayar($id)
     {
         $this->checkAdmin();
@@ -69,7 +57,6 @@ class AdminController extends Controller
         if($pesanan->transaksi) {
             return redirect()->route('admin.pesanan.struk', $id);
         }
-
         return view('admin.bayar', compact('pesanan'));
     }
 
@@ -89,7 +76,9 @@ class AdminController extends Controller
             'metodePembayaran' => $request->metode
         ]);
 
-        return redirect()->route('admin.pesanan.struk', $id)->with('success', 'Pembayaran Berhasil!');
+        return redirect()->route('admin.pesanan.struk', $id)
+        ->with('success', 'Pembayaran Berhasil!')
+        ->with('uang_bayar', $request->uang_bayar);
     }
 
     public function cetakStruk($id)
@@ -100,41 +89,69 @@ class AdminController extends Controller
         if(!$pesanan->transaksi) {
             return back()->with('error', 'Pesanan belum dibayar!');
         }
-
         return view('admin.struk', compact('pesanan'));
     }
 
-    public function laporan()
-    {
-        $this->checkAdmin();
-
-        $today = Carbon::today();
-        $pendapatanHariIni = Transaksi::whereDate('created_at', $today)->sum('totalBayar');
-        $pendapatanBulanIni = Transaksi::whereMonth('created_at', date('m'))->sum('totalBayar');
-        $totalTransaksi = Transaksi::count();
-        $transaksiTerbaru = Transaksi::with('pesanan.user')->latest()->limit(5)->get();
-
-        return view('admin.laporan', compact(
-            'pendapatanHariIni',
-            'pendapatanBulanIni',
-            'totalTransaksi',
-            'transaksiTerbaru'
-        ));
-    }
-
-    // FITUR CETAK LABEL / TAGGING
     public function cetakLabel($id)
     {
         $this->checkAdmin();
-
-        // Ambil data pesanan beserta detailnya
         $pesanan = Pesanan::with(['user', 'details.layanan'])->findOrFail($id);
-
-        // Kita hitung total pcs/kg untuk info di label
         $totalItem = $pesanan->details->sum('jumlah');
-
         return view('admin.label', compact('pesanan', 'totalItem'));
     }
 
+    // --- FUNGSI LAPORAN (DENGAN FIX FILTER TAHUN & BULAN) ---
+    public function laporan(Request $request)
+    {
+        $this->checkAdmin();
 
+        $bulanTerpilih = (int) $request->get('bulan', date('m'));
+        $tahunTerpilih = (int) $request->get('tahun', date('Y'));
+
+        // 1. DATA KARTU STATISTIK
+        $pendapatanHariIni = Transaksi::whereDate('created_at', Carbon::today())->sum('totalBayar');
+
+        $pendapatanFilter = Transaksi::whereMonth('created_at', $bulanTerpilih)
+                                     ->whereYear('created_at', $tahunTerpilih)
+                                     ->sum('totalBayar');
+
+        $totalTransaksiGlobal = Transaksi::count();
+
+        // 2. DATA UNTUK TABEL RIWAYAT
+        $transaksiTerbaru = Transaksi::with('pesanan.user')
+                                    ->whereMonth('created_at', $bulanTerpilih)
+                                    ->whereYear('created_at', $tahunTerpilih)
+                                    ->latest()
+                                    ->get();
+
+        // 3. DATA BARU UNTUK CHART/GRAFIK (Group per Tanggal)
+        // Ambil tanggal dan total uang, dikelompokkan per hari
+        $chartData = Transaksi::selectRaw('DATE(created_at) as tanggal, SUM(totalBayar) as total')
+                            ->whereMonth('created_at', $bulanTerpilih)
+                            ->whereYear('created_at', $tahunTerpilih)
+                            ->groupBy('tanggal')
+                            ->orderBy('tanggal', 'asc')
+                            ->get();
+
+        // Pisahkan jadi dua Array untuk Chart.js
+        // Labels: ['01', '02', '05', ...] (Tanggalnya saja)
+        $chartLabels = $chartData->map(function($item) {
+            return Carbon::parse($item->tanggal)->format('d');
+        });
+
+        // Total: [50000, 120000, 30000, ...]
+        $chartTotal = $chartData->pluck('total');
+
+        // 4. LOGIC DROPDOWN TAHUN
+        $tahunDiDatabase = Transaksi::selectRaw('YEAR(created_at) as tahun')->distinct()->pluck('tahun')->toArray();
+        $tahunDiDatabase[] = (int) date('Y');
+        $listTahun = array_unique($tahunDiDatabase);
+        rsort($listTahun);
+
+        return view('admin.laporan', compact(
+            'pendapatanHariIni', 'pendapatanFilter', 'totalTransaksiGlobal',
+            'transaksiTerbaru', 'bulanTerpilih', 'tahunTerpilih', 'listTahun',
+            'chartLabels', 'chartTotal' // <-- Variabel baru dikirim ke view
+        ));
+    }
 }
