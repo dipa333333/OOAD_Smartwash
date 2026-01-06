@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartWash - Laundry System</title>
+    <title>SmartWash - Maha-Laundry System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><circle cx='18' cy='7' r='2.5'/><path d='M2 12C2 12 5 9 8 12C11 15 13 15 16 12C19 9 22 12 22 12' stroke='%232563eb' stroke-width='2.5' stroke-linecap='round'/></svg>">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="flex flex-col">
                     <span class="text-xl font-black tracking-tighter leading-none text-white uppercase">
-                        SMART<span class="text-cyan-300">WASH</span>
+                        MAHA<span class="text-cyan-300">LAUNDRY</span>
                     </span>
                     <div class="flex items-center gap-1 mt-1">
                         <span class="w-2 h-[2px] bg-cyan-400 rounded-full"></span>

@@ -167,7 +167,7 @@
                 </h2>
 
                 <p class="text-gray-500 text-lg leading-relaxed mb-10 italic">
-                    SmartWash hadir untuk mendefinisikan ulang standar kebersihan. Kami bukan hanya mencuci pakaian, kami memberikan Anda **ketenangan pikiran** dan **waktu luang** yang berharga.
+                    Maha Laundry dengan sistem SmartWash hadir untuk mendefinisikan ulang standar kebersihan. Kami bukan hanya mencuci pakaian, kami memberikan Anda **ketenangan pikiran** dan **waktu luang** yang berharga.
                 </p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-12">
@@ -386,7 +386,7 @@
                     Siap Mencuci <br><span class="text-cyan-300">Tanpa Ribet?</span>
                 </h2>
                 <p class="text-blue-100 mb-10 text-lg opacity-90 leading-relaxed">
-                    Gabung dengan ribuan pelanggan SmartWash. Lokasi strategis, parkir luas, dan layanan kilat menunggu Anda.
+                    Gabung dengan ribuan pelanggan kami. Lokasi strategis, parkir luas, dan layanan kilat menunggu Anda.
                 </p>
 
                 <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
@@ -401,7 +401,7 @@
 
             <div class="relative w-full h-80 lg:h-96 bg-blue-800 rounded-[3rem] overflow-hidden border-8 border-blue-500/30 shadow-inner group-hover:border-blue-400/50 transition-colors duration-500">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3944.1123456789!2d115.123456!3d-8.123456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSmartWash!5e0!3m2!1sid!2sid!4v1234567890"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52015.36964177921!2d115.15122662167967!3d-8.663618699999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd24091ebc2ba6f%3A0x781eae1b410d4c19!2sMAHA%20LAUNDRY!5e1!3m2!1sid!2sid!4v1767336590459!5m2!1sid!2sid" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>"
                     width="100%"
                     height="100%"
                     style="border:0;"
@@ -431,7 +431,7 @@
         <div>
             <h4 class="text-gray-900 font-black uppercase tracking-[0.2em] text-xs mb-8">Informasi Kontak</h4>
             <ul class="space-y-4 text-sm font-medium text-gray-500">
-                <li class="flex items-center gap-3">📍 <span class="hover:text-blue-600 transition cursor-default">Jl. Raya Laundry Utama No. 88</span></li>
+                <li class="flex items-center gap-3">📍 <span class="hover:text-blue-600 transition cursor-default">Jl. Letda Ngurah Putra No. 2A</span></li>
                 <li class="flex items-center gap-3">📞 <span class="hover:text-blue-600 transition cursor-default">0812-3456-7890</span></li>
                 <li class="flex items-center gap-3">🕒 <span class="hover:text-blue-600 transition cursor-default">08:00 - 21:00 WIB</span></li>
             </ul>
@@ -446,7 +446,7 @@
         </div>
     </div>
     <div class="max-w-6xl mx-auto mt-16 pt-8 border-t border-gray-200 text-center">
-        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">© {{ date('Y') }} SmartWash • Made with Passion for Cleanliness</p>
+        <p class="text-[10px] font-black uppercase tracking-[0.5em] text-gray-400">© {{ date('Y') }} Maha Laundry • Made with Passion for Cleanliness</p>
     </div>
 </footer>
 

@@ -8,7 +8,7 @@
     <div class="relative z-10 flex flex-col md:flex-row justify-between items-center gap-4">
         <div>
             <h1 class="text-3xl font-bold mb-2">Halo, {{ Auth::user()->nama }}! 👋</h1>
-            <p class="text-blue-100 opacity-90">Cucian numpuk? Serahkan pada SmartWash sekarang.</p>
+            <p class="text-blue-100 opacity-90">Cucian numpuk? Serahkan pada sistem SmartWash  kami sekarang.</p>
         </div>
         <a href="{{ route('pelanggan.pesan') }}" class="group bg-white text-blue-700 font-bold px-6 py-3 rounded-xl shadow-lg hover:bg-gray-50 transition transform hover:-translate-y-1 flex items-center gap-2">
             <svg class="w-5 h-5 group-hover:rotate-12 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -88,7 +88,7 @@
                     $steps = ['Menunggu Validasi', 'Antre', 'Cuci', 'Setrika', 'Selesai'];
                     $currentStatus = $pesanan->statusPesanan;
                     $currentIndex = array_search($currentStatus, $steps);
-                    if($currentIndex === false) $currentIndex = 0; 
+                    if($currentIndex === false) $currentIndex = 0;
                 @endphp
 
                 <div class="relative">
