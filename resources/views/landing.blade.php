@@ -451,13 +451,11 @@
 </footer>
 
 <style>
-    /* 1. Animasi Muncul Halus */
     @keyframes fadeIn {
         from { opacity: 0; transform: translateY(30px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* 2. Animasi Gelembung Sabun */
     @keyframes bubbleUp {
         0% { transform: translateY(0) scale(0.5); opacity: 0; }
         50% { opacity: 0.8; }
@@ -470,19 +468,16 @@
         animation: bubbleUp ease-in infinite;
     }
 
-    /* 3. Animasi Loading Bar */
     @keyframes loading {
         0% { transform: translateX(-100%); }
         100% { transform: translateX(100%); }
     }
 
-    /* 4. Animasi (Wave) */
     @keyframes wave {
         0%, 100% { transform: translateY(0) rotate(0deg); }
         50% { transform: translateY(-5px) rotate(2deg); }
     }
 
-    /* 5. Animasi Putaran Mesin */
     @keyframes spin {
         from { transform: translate(-50%, 0) rotate(0deg); }
         to { transform: translate(-50%, 0) rotate(360deg); }
@@ -571,7 +566,6 @@
             const type = counter.getAttribute('data-type');
             let count = 0;
 
-            // Hitung kenaikan per frame
             const increment = target / speed;
 
             const updateCount = () => {
@@ -586,7 +580,6 @@
             updateCount();
         };
 
-        // Trigger animasi saat scroll sampai ke elemennya
         const observerOptions = { threshold: 0.5 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

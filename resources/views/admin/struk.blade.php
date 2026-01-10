@@ -6,7 +6,6 @@
     <title>Struk Pembayaran #{{ $pesanan->idPesanan }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Style ala Struk Thermal */
         body { font-family: 'Courier New', Courier, monospace; background: #eee; }
         .struk { width: 300px; background: white; margin: 50px auto; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         .dashed { border-top: 1px dashed #000; margin: 10px 0; }
@@ -65,7 +64,6 @@
 
         @php
             $total = $pesanan->transaksi->totalBayar;
-            // Ambil uang bayar dari session (jika baru bayar) atau anggap uang pas (jika cetak ulang)
             $bayar = session('uang_bayar') ? session('uang_bayar') : $total;
             $kembali = $bayar - $total;
         @endphp
@@ -107,13 +105,8 @@
     </div>
 
     <script>
-        // Otomatis print pas dibuka (opsional)
-        // window.onload = function() { window.print(); }
-
         function handleClose() {
-            // Coba tutup tab dulu
             window.close();
-            // Kalau gak bisa (karena bukan popup), arahkan ke dashboard
             window.location.href = "{{ route('admin.dashboard') }}";
         }
     </script>

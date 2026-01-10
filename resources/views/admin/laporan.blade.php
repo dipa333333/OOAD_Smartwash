@@ -167,14 +167,12 @@
     document.addEventListener("DOMContentLoaded", function() {
         const ctx = document.getElementById('revenueChart').getContext('2d');
 
-        // Ambil data dari Laravel
         const labels = {!! json_encode($chartLabels) !!};
         const data = {!! json_encode($chartTotal) !!};
 
-        // Buat Gradient Warna Biru Keren
         const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.4)'); // Biru Pekat di atas
-        gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)'); // Transparan di bawah
+        gradient.addColorStop(0, 'rgba(37, 99, 235, 0.4)');
+        gradient.addColorStop(1, 'rgba(37, 99, 235, 0.0)');
 
         new Chart(ctx, {
             type: 'line',
@@ -183,22 +181,22 @@
                 datasets: [{
                     label: 'Omzet (Rp)',
                     data: data,
-                    borderColor: '#2563eb', // Warna Garis (Blue-600)
-                    backgroundColor: gradient, // Warna Area Bawah
+                    borderColor: '#2563eb',
+                    backgroundColor: gradient,
                     borderWidth: 3,
-                    pointBackgroundColor: '#ffffff', // Titik Putih
-                    pointBorderColor: '#2563eb', // Pinggiran Titik Biru
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#2563eb',
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    fill: true, // Isi area bawah garis
-                    tension: 0.4 // Garis Melengkung (Curved)
+                    fill: true,
+                    tension: 0.4
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: { display: false }, // Hilangkan legenda
+                    legend: { display: false },
                     tooltip: {
                         backgroundColor: '#1e293b',
                         padding: 12,
@@ -217,7 +215,7 @@
                 },
                 scales: {
                     x: {
-                        grid: { display: false }, // Hilangkan garis vertikal
+                        grid: { display: false },
                         ticks: { font: { size: 11, weight: 'bold' }, color: '#94a3b8' }
                     },
                     y: {
@@ -227,7 +225,7 @@
                             font: { size: 10, weight: 'bold' },
                             color: '#94a3b8',
                             callback: function(value) {
-                                return (value / 1000) + 'k'; // Format 100k
+                                return (value / 1000) + 'k'; 
                             }
                         }
                     }

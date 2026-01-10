@@ -48,7 +48,7 @@ class AdminController extends Controller
         return back()->with('success', "Status pesanan #{$id} diperbarui!");
     }
 
-    // --- FUNGSI BAYAR (YANG TADI TERHAPUS) ---
+    // --- FUNGSI BAYAR  ---
     public function formBayar($id)
     {
         $this->checkAdmin();
@@ -100,7 +100,7 @@ class AdminController extends Controller
         return view('admin.label', compact('pesanan', 'totalItem'));
     }
 
-    // --- FUNGSI LAPORAN (DENGAN FIX FILTER TAHUN & BULAN) ---
+    // --- FUNGSI LAPORAN ---
     public function laporan(Request $request)
     {
         $this->checkAdmin();
@@ -125,7 +125,6 @@ class AdminController extends Controller
                                     ->get();
 
         // 3. DATA BARU UNTUK CHART/GRAFIK (Group per Tanggal)
-        // Ambil tanggal dan total uang, dikelompokkan per hari
         $chartData = Transaksi::selectRaw('DATE(created_at) as tanggal, SUM(totalBayar) as total')
                             ->whereMonth('created_at', $bulanTerpilih)
                             ->whereYear('created_at', $tahunTerpilih)
@@ -133,13 +132,10 @@ class AdminController extends Controller
                             ->orderBy('tanggal', 'asc')
                             ->get();
 
-        // Pisahkan jadi dua Array untuk Chart.js
-        // Labels: ['01', '02', '05', ...] (Tanggalnya saja)
         $chartLabels = $chartData->map(function($item) {
             return Carbon::parse($item->tanggal)->format('d');
         });
 
-        // Total: [50000, 120000, 30000, ...]
         $chartTotal = $chartData->pluck('total');
 
         // 4. LOGIC DROPDOWN TAHUN
@@ -151,7 +147,7 @@ class AdminController extends Controller
         return view('admin.laporan', compact(
             'pendapatanHariIni', 'pendapatanFilter', 'totalTransaksiGlobal',
             'transaksiTerbaru', 'bulanTerpilih', 'tahunTerpilih', 'listTahun',
-            'chartLabels', 'chartTotal' // <-- Variabel baru dikirim ke view
+            'chartLabels', 'chartTotal' 
         ));
     }
 }

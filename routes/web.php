@@ -16,12 +16,11 @@ use App\Http\Controllers\RegisterController;
 |--------------------------------------------------------------------------
 */
 
-// --- HALAMAN UTAMA (LANDING PAGE) ---
-// Sekarang buka web langsung ke Landing Page, bukan redirect ke Login
+// --- HALAMAN UTAMA ---
 Route::get('/', [LandingController::class, 'index'])->name('home');
 Route::get('/cek-laundry', [LandingController::class, 'cekPesanan'])->name('cek.pesanan');
 
-// --- ROUTE GUEST (Hanya bisa diakses jika BELUM login) ---
+// --- ROUTE GUEST ---
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.post');
@@ -36,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    // --- FITUR PROFIL (Bisa diakses Admin & Pelanggan) ---
+    // --- FITUR PROFIL ---
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
@@ -49,7 +48,7 @@ Route::middleware('auth')->group(function () {
         // CRUD LAYANAN
         Route::resource('layanan', LayananController::class);
 
-        // Fitur Operasional (Detail, Status, Bayar, Struk, Label, Laporan)
+        // Fitur Operasional 
         Route::get('/pesanan/{id}', [AdminController::class, 'show'])->name('pesanan.show');
         Route::patch('/pesanan/{id}/update', [AdminController::class, 'updateStatus'])->name('pesanan.update');
         Route::get('/pesanan/{id}/bayar', [AdminController::class, 'formBayar'])->name('pesanan.bayar');

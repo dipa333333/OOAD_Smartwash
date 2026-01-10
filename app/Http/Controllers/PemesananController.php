@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 
 class PemesananController extends Controller
 {
-    // Halaman Dashboard Pelanggan 
     public function index()
     {
 
@@ -23,7 +22,6 @@ class PemesananController extends Controller
         return view('pelanggan.dashboard', compact('pesanans'));
     }
 
-    // Halaman Form Pemesanan
     public function create()
     {
         $layanans = Layanan::all();

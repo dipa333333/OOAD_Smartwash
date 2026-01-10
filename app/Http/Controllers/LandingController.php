@@ -10,7 +10,6 @@ class LandingController extends Controller
 {
     public function index()
     {
-        // Ambil data layanan buat ditampilkan di section "Harga"
         $layanans = Layanan::all();
         return view('landing', compact('layanans'));
     }
@@ -21,7 +20,6 @@ class LandingController extends Controller
         $pesanan = null;
 
         if($search) {
-            // Cari pesanan berdasarkan ID, load relasi user & details
             $pesanan = Pesanan::with(['user', 'details.layanan'])
                             ->where('idPesanan', $search)
                             ->first();

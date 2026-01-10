@@ -22,10 +22,8 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
 
-        // Validasi Input
         $request->validate([
             'nama' => 'required|string|max:255',
-            // Username harus unik, TAPI kecualikan (ignore) milik user ini sendiri
             'username' => [
                 'required',
                 'string',
@@ -34,17 +32,14 @@ class ProfileController extends Controller
             ],
             'nomorTelepon' => 'nullable|numeric',
             'alamat' => 'nullable|string',
-            // Password opsional (nullable), kalau diisi minimal 6 karakter & harus confirmed
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
-        // Update Data Diri Dasar
         $user->nama = $request->nama;
         $user->username = $request->username;
         $user->nomorTelepon = $request->nomorTelepon;
         $user->alamat = $request->alamat;
 
-        // Cek apakah user mengisi password baru?
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }

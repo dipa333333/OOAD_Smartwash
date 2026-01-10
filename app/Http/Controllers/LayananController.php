@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LayananController extends Controller
 {
-    // Helper untuk memastikan hanya admin yang akses
     private function checkAdmin() {
         if (Auth::user()->role !== 'admin') abort(403, 'Akses Ditolak.');
     }

@@ -28,10 +28,9 @@ class RegisterController extends Controller
             'username' => $request->username,
             'nomorTelepon' => $request->nomorTelepon,
             'password' => Hash::make($request->password),
-            'role' => 'pelanggan', // Default user baru adalah pelanggan
+            'role' => 'pelanggan',
         ]);
 
-        // Otomatis login setelah daftar
         Auth::login($user);
 
         return redirect()->route('pelanggan.dashboard')->with('success', 'Akun berhasil dibuat! Selamat datang di SmartWash.');
